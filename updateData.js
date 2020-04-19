@@ -253,7 +253,6 @@ setInterval(function () {
 
                 var i = 0;
                 for (; i < results.length; i++) {
-                    //numeros errados
                     if (i <= 6) {
                         results_braga.push(Object.values(results[i]));
                     } else if (i >= 7 && i <= 13) {

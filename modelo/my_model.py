@@ -73,15 +73,10 @@ def series_to_supervised(data, n_in=1, n_out=1, dropnan=True):
 
 
 values = dataset.values
-# integer encode direction
-#encoder = LabelEncoder()
-#values[:,3] = encoder.fit_transform(values[:,3])
-# ensure all data is float
 values = values.astype('float32')
 # normalize features
 scaler = MinMaxScaler(feature_range=(0, 1))
 scaled = scaler.fit_transform(values[:, [0, 1, 2, 4, 5, 6]])
-
 
 col = np.array(values[:, 3])
 col.shape = (values.shape[0], 1)
@@ -90,21 +85,14 @@ scaled = np.hstack((scaled[:, :3], col, scaled[:, 3:]))
 
 print(scaled[:, 3])
 
-
 # frame as supervised learning
 reframed = series_to_supervised(scaled, 7, 1)
-# drop columns we don't want to predict
 reframed.drop(reframed.columns[[49, 50, 51, 53, 54, 55]], axis=1, inplace=True)
-# print(reframed.head())
 
-# reframed.to_csv('teste.csv')
-
-
-# split into train and test sets
 
 values = reframed.values
 
-# pensar melhor se é boa ideia ter o shuffle
+
 train, test = train_test_split(values, test_size=0.2, shuffle=True)
 
 # split into input and outputs
